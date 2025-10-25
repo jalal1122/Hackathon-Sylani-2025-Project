@@ -33,11 +33,6 @@ const Navbar = () => {
               <span>Home</span>
             </Link>
           </li>
-          <li className="flex gap-2 justify-center items-center nav-Links">
-            <Link to="/checkout" className="flex gap-2 items-center">
-              <span className="text-amber-400">Checkout</span>
-            </Link>
-          </li>
           <li className="flex gap-2 justify-center items-center relative">
             <Link to="/cart" className="flex gap-2 items-center">
               <FaShoppingCart
@@ -84,15 +79,6 @@ const Navbar = () => {
                 className="flex items-center gap-2"
               >
                 <FaHome color="#FEB627" /> <span>Home</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/checkout"
-                onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2"
-              >
-                <span className="text-amber-400">Checkout</span>
               </Link>
             </li>
             <li>
