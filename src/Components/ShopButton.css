@@ -1,0 +1,89 @@
+:root {
+  --shop-yellow: #feb627;
+  --shop-offwhite: #fbf6ee;
+  --shop-text: #111827; /* gray-900 */
+}
+
+.shop-btn {
+  --radius: 999px;
+  --pad-y: 0.75rem; /* ~12px */
+  --pad-x: 1.25rem; /* ~20px */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--shop-text);
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  background: var(--shop-offwhite);
+  border-radius: var(--radius);
+  padding: var(--pad-y) var(--pad-x);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.25s ease, color 0.25s ease,
+    box-shadow 0.25s ease, transform 0.06s ease;
+}
+
+.shop-btn:focus {
+  outline: 2px solid color-mix(in oklab, var(--shop-yellow) 60%, white);
+  outline-offset: 2px;
+}
+
+.shop-btn:active {
+  transform: translateY(1px);
+}
+
+/* Left icon wedge */
+.shop-btn__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 36px;
+  color: #ffffff;
+  background: var(--shop-yellow);
+  border-radius: 10px 0 0 10px;
+  margin-left: -8px; /* nudge into the pill to resemble the design */
+  padding-left: 10px; /* keep icon centered visually */
+}
+
+/* Create a diagonal notch on the right side of the yellow block */
+.shop-btn__icon::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  border-left: 10px solid var(--shop-yellow);
+}
+
+.shop-btn__label {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Hover: whole button becomes yellow */
+.shop-btn:hover {
+  background: var(--shop-yellow);
+  color: #111827; /* keep text dark on yellow */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.shop-btn:hover .shop-btn__icon {
+  background: transparent;
+  color: #111827; /* dark icon on yellow for contrast */
+}
+
+.shop-btn:hover .shop-btn__icon::after {
+  border-left-color: transparent; /* hide notch so it blends into full yellow */
+}
+
+/* Full width option */
+.shop-btn--full {
+  width: 100%;
+  justify-content: center;
+}
