@@ -1,8 +1,10 @@
 import React, { useContext, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { FaHome } from "react-icons/fa";
+import { FiCheckCircle } from "react-icons/fi";
 import AppContext from "../Context/AppContext";
 import heroBg from "../assets/hero2.png";
+import Modal from "../Components/Modal";
 
 const OrderSummary = () => {
   const { cartItems, setCartItems } = useContext(AppContext);
@@ -15,6 +17,7 @@ const OrderSummary = () => {
     city: "",
     zip: "",
   });
+  const [showModal, setShowModal] = useState(false);
 
   const subtotal = useMemo(
     () =>
@@ -27,17 +30,15 @@ const OrderSummary = () => {
 
   const placeOrder = () => {
     if (!form.name || !form.email || !form.address || !form.city || !form.zip) {
-      alert("Please fill in your shipping details before placing the order.");
+      // no alerts per request; simply do not proceed
       return;
     }
     if ((cartItems || []).length === 0) {
-      alert("Your cart is empty.");
       return;
     }
-    // Alert, clear cart and redirect to home per requirements
-    alert("Order placed successfully!");
+    // Show success modal instead of alert/redirect
     setCartItems([]);
-    navigate("/");
+    setShowModal(true);
   };
 
   return (
@@ -145,7 +146,43 @@ const OrderSummary = () => {
           </button>
         </div>
       </div>
-      {/* Modal removed in favor of alert + redirect per requirements */}
+      {/* Success Modal */}
+      <Modal open={showModal} onClose={() => setShowModal(false)}>
+        <div className="text-center p-2">
+          <div className="mx-auto mb-3 flex items-center justify-center">
+            <FiCheckCircle className="text-emerald-500" size={52} />
+          </div>
+          <h3 className="text-xl font-extrabold text-gray-900">
+            Order Placed!
+          </h3>
+          <p className="mt-1 text-gray-600">
+            {form.name ? `Thank you, ${form.name}. ` : "Thank you. "}
+            Your order has been placed successfully.
+          </p>
+          {form.email && (
+            <p className="text-gray-500 text-sm mt-1">
+              A confirmation has been sent to {form.email}.
+            </p>
+          )}
+          <div className="mt-5 flex flex-col sm:flex-row gap-3 sm:justify-center">
+            <button
+              onClick={() => setShowModal(false)}
+              className="px-5 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-50"
+            >
+              Stay Here
+            </button>
+            <button
+              onClick={() => {
+                setShowModal(false);
+                navigate("/");
+              }}
+              className="px-5 py-2 rounded bg-amber-400 hover:bg-amber-500 text-white font-bold"
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

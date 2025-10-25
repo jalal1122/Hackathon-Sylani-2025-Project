@@ -104,7 +104,7 @@ const Products = () => {
         <div className="h-1 w-8 rounded-full bg-gray-400"></div>
         <img src={logo} className="w-30" alt="" />
         <div className="h-1 w-8 rounded-full bg-gray-400"></div>
-      </div> 
+      </div>
 
       {/* Heading */}
       <h1 className="text-4xl font-bold text-center uppercase text-[#363738]">
