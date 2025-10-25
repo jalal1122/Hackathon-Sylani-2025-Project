@@ -11,7 +11,9 @@ const Modal = ({ open, onClose, children, className = "" }) => {
         aria-hidden="true"
       />
       <div className="absolute inset-0 flex items-center justify-center p-4">
-        <div className={`relative w-full max-w-md bg-white rounded-xl shadow-2xl p-6 ${className}`}>
+        <div
+          className={`relative w-full max-w-md bg-white rounded-xl shadow-2xl p-6 ${className}`}
+        >
           <button
             aria-label="Close"
             onClick={onClose}

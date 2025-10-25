@@ -11,7 +11,9 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
-  const [priceFilter, setPriceFilter] = useState(0);
+  // Selected range values (controlled by dual sliders)
+  const [minSelected, setMinSelected] = useState(0);
+  const [maxSelected, setMaxSelected] = useState(0);
   const { cartItems: _cartItems, setCartItems } = useContext(AppContext);
 
   const addToCart = useCallback(
@@ -60,7 +62,8 @@ const Products = () => {
           const hi = Math.ceil(Math.max(...prices));
           setMinPrice(lo);
           setMaxPrice(hi);
-          setPriceFilter(hi);
+          setMinSelected(lo);
+          setMaxSelected(hi);
         }
       } catch (err) {
         if (err.name !== "AbortError") {
@@ -80,9 +83,12 @@ const Products = () => {
     const controller = new AbortController();
     const run = async () => {
       try {
-        const res = await fetch("https://fakestoreapi.com/products/categories", {
-          signal: controller.signal,
-        });
+        const res = await fetch(
+          "https://fakestoreapi.com/products/categories",
+          {
+            signal: controller.signal,
+          }
+        );
         if (!res.ok) throw new Error("categories");
         const list = await res.json();
         setCategories(["All", ...list]);
@@ -98,12 +104,13 @@ const Products = () => {
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
-      const matchesPrice = (Number(p.price) || 0) <= priceFilter;
+      const price = Number(p.price) || 0;
+      const matchesPrice = price >= minSelected && price <= maxSelected;
       const matchesCat =
         selectedCategory === "All" || p.category === selectedCategory;
       return matchesPrice && matchesCat;
     });
-  }, [products, priceFilter, selectedCategory]);
+  }, [products, minSelected, maxSelected, selectedCategory]);
 
   return (
     <div className="flex flex-col gap-8 p-4 justify-center items-center">
@@ -112,10 +119,10 @@ const Products = () => {
         <div className="h-1 w-8 rounded-full bg-gray-400"></div>
         <img src={logo} className="w-30" alt="" />
         <div className="h-1 w-8 rounded-full bg-gray-400"></div>
-      </div>
+      </div> 
 
       {/* Heading */}
-      <h1 className="text-4xl font-bold uppercase text-[#363738]">
+      <h1 className="text-4xl font-bold text-center uppercase text-[#363738]">
         Featured Products
       </h1>
       <p className="max-w-[800px] w-full text-center text-gray-600">
@@ -146,23 +153,49 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Price filter */}
-      <div className="w-full max-w-5xl px-4 pretty-range">
+      {/* Price range filter (dual thumb) */}
+      <div className="w-full max-w-5xl px-4">
         <div className="flex items-center gap-4">
-          <span className="text-sm md:text-base text-gray-600 shrink-0">Price:</span>
+          <span className="text-sm md:text-base text-gray-600 shrink-0">
+            Price:
+          </span>
           <div className="flex-1">
-            <input
-              type="range"
-              min={minPrice}
-              max={maxPrice}
-              value={priceFilter}
-              onChange={(e) => setPriceFilter(Number(e.target.value))}
-              className="w-full"
-            />
-            <div className="mt-2 flex justify-between text-xs md:text-sm text-gray-500">
-              <span>$ {minPrice}</span>
-              <span className="value-badge">$ {priceFilter}</span>
-              <span>$ {maxPrice}</span>
+            <div className="relative h-8 flex items-center pretty-range">
+              {/* Min slider */}
+              <input
+                type="range"
+                min={minPrice}
+                max={maxPrice}
+                step={1}
+                value={minSelected}
+                onChange={(e) => {
+                  const val = Math.min(Number(e.target.value), maxSelected);
+                  setMinSelected(val);
+                }}
+                className="absolute inset-0 w-full pointer-events-auto"
+              />
+              {/* Max slider */}
+              <input
+                type="range"
+                min={minPrice}
+                max={maxPrice}
+                step={1}
+                value={maxSelected}
+                onChange={(e) => {
+                  const val = Math.max(Number(e.target.value), minSelected);
+                  setMaxSelected(val);
+                }}
+                className="absolute inset-0 w-full pointer-events-auto"
+              />
+            </div>
+            <div className="mt-3 grid grid-cols-3 items-center text-xs md:text-sm text-gray-600">
+              <span className="justify-self-start">$ {minPrice}</span>
+              <div className="justify-self-center flex items-center gap-2">
+                <span className="value-badge">$ {minSelected}</span>
+                <span className="text-gray-400">to</span>
+                <span className="value-badge">$ {maxSelected}</span>
+              </div>
+              <span className="justify-self-end">$ {maxPrice}</span>
             </div>
           </div>
         </div>

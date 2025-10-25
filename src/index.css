@@ -1,63 +1,60 @@
 @import "tailwindcss";
-@import 'swiper/css';
-@import 'swiper/css/autoplay';
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination';
-
+@import "swiper/css";
+@import "swiper/css/autoplay";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
 
 @layer utilities {
-
-    .nav-Links{
-        @apply hover:cursor-pointer
-    }
-
+  .nav-Links {
+    @apply hover:cursor-pointer;
+  }
 }
 
 .swiper-button-next,
 .swiper-button-prev {
-    color: #FFB535 !important;
+  color: #ffb535 !important;
 }
 
 /* Pretty range slider styling */
 @layer components {
-    .pretty-range input[type="range"] {
-        appearance: none;
-        width: 100%;
-        background: transparent;
-    }
-    .pretty-range input[type="range"]::-webkit-slider-runnable-track {
-        height: 8px;
-        border-radius: 9999px;
-        background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
-    }
-    .pretty-range input[type="range"]::-moz-range-track {
-        height: 8px;
-        border-radius: 9999px;
-        background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
-    }
-    .pretty-range input[type="range"]::-webkit-slider-thumb {
-        appearance: none;
-        height: 20px;
-        width: 20px;
-        margin-top: -6px; /* center the thumb */
-        border-radius: 9999px;
-        background: white;
-        border: 3px solid #f59e0b;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-    .pretty-range input[type="range"]::-moz-range-thumb {
-        height: 20px;
-        width: 20px;
-        border: 3px solid #f59e0b;
-        border-radius: 9999px;
-        background: white;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-    .pretty-range .value-badge {
-        background: #fde68a;
-        color: #92400e;
-        padding: 2px 8px;
-        border-radius: 9999px;
-        font-weight: 700;
-    }
+  .pretty-range input[type="range"] {
+    appearance: none;
+    width: 100%;
+    background: transparent;
+  }
+  .pretty-range input[type="range"]::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  }
+  .pretty-range input[type="range"]::-moz-range-track {
+    height: 8px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  }
+  .pretty-range input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    margin-top: -6px; /* center the thumb */
+    border-radius: 9999px;
+    background: white;
+    border: 3px solid #f59e0b;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  .pretty-range input[type="range"]::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+    border: 3px solid #f59e0b;
+    border-radius: 9999px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  .pretty-range .value-badge {
+    background: #fde68a;
+    color: #92400e;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-weight: 700;
+  }
 }

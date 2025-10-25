@@ -59,7 +59,7 @@ const OrderSummary = () => {
             <span className="text-sm">Order Summary</span>
           </div>
         </div>
-  </div>
+      </div>
 
       {/* Content */}
       <div className="max-w-6xl mx-auto -mt-10 relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-6 px-4 md:px-0">
@@ -179,4 +179,3 @@ const Input = ({ label, value, onChange, type = "text", className = "" }) => (
 );
 
 export default OrderSummary;
- 

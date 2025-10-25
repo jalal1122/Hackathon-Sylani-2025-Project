@@ -26,7 +26,7 @@ const Hero = () => {
   ];
 
   return (
-    <div className="relative w-full h-[85vh] md:h-screen">
+    <div className="relative w-full min-h-[60vh] md:min-h-[90vh]">
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
@@ -37,20 +37,20 @@ const Hero = () => {
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div
-              className="h-screen bg-cover bg-center relative"
+              className="h-full h-screen bg-cover bg-center relative"
               style={{ backgroundImage: `url(${slide.image})` }}
             >
               {/* Overlay */}
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                 <div className="text-center text-white px-4">
-                  <h1 className="text-3xl md:text-8xl font-bold mb-4">
+                  <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-3 md:mb-4">
                     BEST SALE
                   </h1>
                   <div className="flex gap-2 mb-4 justify-center items-center">
                     <div className="flex flex-col">
                       <img src={line1} alt="" />
                     </div>{" "}
-                    <span className="text-xl md:text-4xl font-semibold">
+                    <span className="text-lg sm:text-2xl md:text-4xl font-semibold">
                       THE BLACK PHANTOM
                     </span>
                     <div className="flex flex-col">

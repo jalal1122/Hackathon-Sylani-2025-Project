@@ -7,8 +7,7 @@ import heroBg from "../assets/hero3.png";
 
 const Cart = () => {
   const { cartItems, setCartItems } = useContext(AppContext);
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // AppContext persists changes; no need to write here
 
@@ -58,15 +57,15 @@ const Cart = () => {
     <div className="pb-16">
       {/* Hero header */}
       <div
-        className="h-64 md:h-80 bg-cover bg-center relative flex items-center justify-center"
+        className="min-h-[40vh] md:min-h-[50vh] bg-cover bg-center relative flex items-center justify-center"
         style={{ backgroundImage: `url(${heroBg})` }}
       >
         <div className="absolute inset-0 bg-black/60" aria-hidden="true" />
         <div className="relative text-center text-white">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-wide">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-wide">
             SHOPPING CART
           </h1>
-          <div className="mt-6 inline-flex items-center gap-2 bg-white text-gray-800 px-4 py-2 rounded shadow">
+          <div className="mt-4 md:mt-6 inline-flex items-center gap-2 bg-white text-gray-800 px-4 py-2 rounded shadow">
             <Link to="/" className="text-amber-500">
               <FaHome />
             </Link>
@@ -76,12 +75,13 @@ const Cart = () => {
       </div>
 
       {/* Cart table */}
-      <div className="max-w-6xl mx-auto -mt-10 bg-white shadow p-6 rounded relative z-10">
-        <div className="grid grid-cols-12 font-extrabold uppercase text-white bg-amber-400 px-4 py-3 rounded">
-          <div className="col-span-6">Product</div>
-          <div className="col-span-2 text-center">Price</div>
-          <div className="col-span-2 text-center">Quantity</div>
-          <div className="col-span-2 text-right">Total</div>
+      <div className="max-w-6xl mx-auto -mt-6 md:-mt-10 bg-white shadow p-4 md:p-6 rounded relative z-10">
+        {/* Table header (desktop only) */}
+        <div className="hidden md:grid grid-cols-12 font-extrabold uppercase text-white bg-amber-400 px-4 py-3 rounded">
+          <div className="md:col-span-6">Product</div>
+          <div className="md:col-span-2 text-center">Price</div>
+          <div className="md:col-span-2 text-center">Quantity</div>
+          <div className="md:col-span-2 text-right">Total</div>
         </div>
 
         {/* Items */}
@@ -98,12 +98,12 @@ const Cart = () => {
               className="grid grid-cols-12 gap-4 items-center py-6"
             >
               {/* Product info */}
-              <div className="col-span-6 flex items-center gap-4">
-                <div className="h-24 w-24 bg-gray-100 rounded grid place-items-center overflow-hidden">
+              <div className="col-span-12 md:col-span-6 flex items-center gap-4">
+                <div className="h-20 w-20 md:h-24 md:w-24 bg-gray-100 rounded grid place-items-center overflow-hidden">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="max-h-24 object-contain"
+                    className="max-h-20 md:max-h-24 object-contain"
                   />
                 </div>
                 <div>
@@ -120,13 +120,16 @@ const Cart = () => {
               </div>
 
               {/* Price */}
-              <div className="col-span-2 text-center font-semibold text-gray-900">
+              <div className="col-span-6 md:col-span-2 md:text-center font-semibold text-gray-900">
+                <span className="md:hidden text-xs text-gray-500 mr-2">
+                  Price:
+                </span>
                 $ {Number(item.price).toFixed(2)}
               </div>
 
               {/* Quantity controls */}
-              <div className="col-span-2">
-                <div className="mx-auto w-fit border rounded flex items-center overflow-hidden">
+              <div className="col-span-6 md:col-span-2">
+                <div className="mx-auto md:mx-0 w-fit border rounded flex items-center overflow-hidden">
                   <button
                     className="h-10 w-10 grid place-items-center hover:bg-gray-50"
                     onClick={() => decrement(item.id)}
@@ -148,7 +151,10 @@ const Cart = () => {
               </div>
 
               {/* Line total */}
-              <div className="col-span-2 text-right font-extrabold text-gray-900">
+              <div className="col-span-12 md:col-span-2 md:text-right font-extrabold text-gray-900">
+                <span className="md:hidden text-xs text-gray-500 mr-2">
+                  Total:
+                </span>
                 $ {(Number(item.price) * (item.quantity || 1)).toFixed(2)}
               </div>
             </div>
@@ -162,7 +168,10 @@ const Cart = () => {
             <span className="text-amber-600">$ {subtotal.toFixed(2)}</span>
           </div>
 
-          <button onClick={() => navigate("/order-summary")} className="bg-amber-400 hover:bg-amber-500 text-white font-bold px-8 py-3 rounded hover:cursor-pointer shadow">
+          <button
+            onClick={() => navigate("/order-summary")}
+            className="w-full md:w-auto bg-amber-400 hover:bg-amber-500 text-white font-bold px-8 py-3 rounded hover:cursor-pointer shadow text-center"
+          >
             PROCEED TO CHECKOUT
           </button>
         </div>
