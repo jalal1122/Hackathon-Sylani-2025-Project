@@ -9,11 +9,7 @@ const Products = () => {
   const [error, setError] = useState("");
   const [categories, setCategories] = useState(["All"]);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-  // Selected range values (controlled by dual sliders)
-  const [minSelected, setMinSelected] = useState(0);
-  const [maxSelected, setMaxSelected] = useState(0);
+  // Removed price range filter
   const { cartItems: _cartItems, setCartItems } = useContext(AppContext);
 
   const addToCart = useCallback(
@@ -55,16 +51,7 @@ const Products = () => {
         const data = await response.json();
         setProducts(data);
         setError("");
-        // compute price range
-        if (Array.isArray(data) && data.length) {
-          const prices = data.map((p) => Number(p.price) || 0);
-          const lo = Math.floor(Math.min(...prices));
-          const hi = Math.ceil(Math.max(...prices));
-          setMinPrice(lo);
-          setMaxPrice(hi);
-          setMinSelected(lo);
-          setMaxSelected(hi);
-        }
+        // no price range initialization needed
       } catch (err) {
         if (err.name !== "AbortError") {
           setError("Failed to load products. Please try again.");
@@ -104,13 +91,11 @@ const Products = () => {
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
-      const price = Number(p.price) || 0;
-      const matchesPrice = price >= minSelected && price <= maxSelected;
       const matchesCat =
         selectedCategory === "All" || p.category === selectedCategory;
-      return matchesPrice && matchesCat;
+      return matchesCat;
     });
-  }, [products, minSelected, maxSelected, selectedCategory]);
+  }, [products, selectedCategory]);
 
   return (
     <div className="flex flex-col gap-8 p-4 justify-center items-center">
@@ -153,53 +138,7 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Price range filter (dual thumb) */}
-      <div className="w-full max-w-5xl px-4">
-        <div className="flex items-center gap-4">
-          <span className="text-sm md:text-base text-gray-600 shrink-0">
-            Price:
-          </span>
-          <div className="flex-1">
-            <div className="relative h-8 flex items-center pretty-range">
-              {/* Min slider */}
-              <input
-                type="range"
-                min={minPrice}
-                max={maxPrice}
-                step={1}
-                value={minSelected}
-                onChange={(e) => {
-                  const val = Math.min(Number(e.target.value), maxSelected);
-                  setMinSelected(val);
-                }}
-                className="absolute inset-0 w-full pointer-events-auto"
-              />
-              {/* Max slider */}
-              <input
-                type="range"
-                min={minPrice}
-                max={maxPrice}
-                step={1}
-                value={maxSelected}
-                onChange={(e) => {
-                  const val = Math.max(Number(e.target.value), minSelected);
-                  setMaxSelected(val);
-                }}
-                className="absolute inset-0 w-full pointer-events-auto"
-              />
-            </div>
-            <div className="mt-3 grid grid-cols-3 items-center text-xs md:text-sm text-gray-600">
-              <span className="justify-self-start">$ {minPrice}</span>
-              <div className="justify-self-center flex items-center gap-2">
-                <span className="value-badge">$ {minSelected}</span>
-                <span className="text-gray-400">to</span>
-                <span className="value-badge">$ {maxSelected}</span>
-              </div>
-              <span className="justify-self-end">$ {maxPrice}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Price range filter removed by request */}
 
       {/* Loading / Error */}
       {loading && <div className="py-10 text-gray-500">Loading products…</div>}
